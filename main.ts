@@ -1,7 +1,6 @@
 // set up
 scene.setBackgroundColor(1)
-info.startCountdown(30)
-game.splash("WELCOME TO HARD PONG!", "Dont let the ball overlap the red line.")
+game.splash("WELCOME TO PONG!")
 // ball very coolies
 let ballSprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
@@ -65,7 +64,6 @@ let npcSprite = sprites.create(img`
     . . . . . . f f f f f f f f . . 
     . . . . . . f f f f f f f f . . 
     `, SpriteKind.Player)
-info.player2.setLife(5)
 game.onUpdateInterval(300, function () {
     npcSprite.setPosition(10, randint(0, screen.height))
 })
@@ -384,11 +382,14 @@ forever(function () {
         if (ballSprite.overlapsWith(player2death)) {
             ballSprite.vx = ballSprite.vx * -1
             pause(200)
-            info.player2.changeLifeBy(-1)
         }
     })
     sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite: Sprite, otherSprite: Sprite) {
-        ballSprite.vx = ballSprite.vx * -1
+
+        if (ballSprite.overlapsWith(playerSprite)) {
+            sprite.vx = ballSprite.vx * -1
+            pause(100)
+        }
     })
 
 })
@@ -398,14 +399,5 @@ info.player1.onLifeZero(function() {
         info.player1.life()
         game.setGameOverEffect(true, effects.clouds)
         game.gameOver(false)
-    } else {
-        playerSprite.startEffect(effects.smiles, 3000)
-        game.splash("Congrats You Won!")
-        game.setGameOverEffect(true, effects.confetti)
-        game.gameOver(true)
-    }
-})
-info.onCountdownEnd(function() {
-    game.setGameOverEffect(true, effects.confetti)
-    game.gameOver(true)
+    } 
 })

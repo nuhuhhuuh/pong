@@ -1,5 +1,5 @@
 {
-    "name": "Pong but Hard!",
+    "name": "Pong!",
     "version": "0.1.0",
     "description": "",
     "dependencies": {
@@ -15,7 +15,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "4.1.25",
+        "target": "4.1.27",
         "targetId": "arcade"
     },
     "supportedTargets": [
